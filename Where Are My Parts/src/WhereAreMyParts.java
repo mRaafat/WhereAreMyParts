@@ -16,31 +16,30 @@ public class WhereAreMyParts extends SearchTree {
 
 	public void GenGrid() {
 		// int randomRows,randomColumns = 0;
-		// minimum possible of grid squares is 20 and maximum 100
-		int randomRows = 5 + (int) Math.ceil(Math.random() * 10);
-		int randomColumns = 5 + (int) Math.ceil(Math.random() * 10);
-		// Number of robot parts are minimum 6 and maximum 16 "An assumption"
+		// at least one
+		int randomRows = 1 + (int) (Math.random());
+		int randomColumns = 1 + (int) (Math.random());
 		int numberOfRobotParts = 6 + (int) (Math.random() * (11));
-		// Number of Obstacles is equal half of the total number of squares in
-		// the grid minus number of grids occupied by the robot parts
-		int randomObstacleNumber = (int) (Math.random() * ((randomRows * randomColumns) - numberOfRobotParts));
-		int[] randomPartPosition = new int[numberOfRobotParts];
-		int[] randomObstaclePosition = new int[randomObstacleNumber];
+		int[] robotPartsPositions = new int[numberOfRobotParts];
 
 		grid = new String[randomRows][randomColumns];
+		// Number of robot parts are minimum 6 and maximum 16 "An assumption"
 
-		// Creating random positions in the grid to put the parts of robots in
-		for (int k = 0; k < randomPartPosition.length; k++) {
-			randomPartPosition[k] = (int) (Math.random() * (grid.length + 1));
+		// Generating positions for the robot parts
+		for (int i = 0; i < robotPartsPositions.length; i++) {
+			robotPartsPositions[i] = (int) (Math.random() * grid.length);
 		}
-		// Creating random positions in the grid to put the obstacles in
-		for (int j = 0; j < randomObstacleNumber; j++) {
-			int random = (int) ((Math.random() * (grid.length) + 1));
-			
+		// Generating number of Obstacles
+		int numberOfObstacles = (int) (Math.random() * grid.length);
+		while (numberOfObstacles == 0
+				|| numberOfObstacles >= grid.length - numberOfRobotParts) {
+			numberOfObstacles = (int) (Math.random() * grid.length);
 		}
 
+		// Generating obstacles positions
+		int[] obstaclesPositions = new int[numberOfObstacles];
 		for (int i = 0; i < numberOfRobotParts; i++) {
-
+			obstaclesPositions[i] = (int) (Math.random() * grid.length);
 		}
 
 	}
