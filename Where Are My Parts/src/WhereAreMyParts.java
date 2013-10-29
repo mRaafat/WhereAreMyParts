@@ -36,7 +36,7 @@ public class WhereAreMyParts extends SearchTree {
 		// Creating random positions in the grid to put the obstacles in
 		for (int j = 0; j < randomObstacleNumber; j++) {
 			int random = (int) ((Math.random() * (grid.length) + 1));
-
+			
 		}
 
 		for (int i = 0; i < numberOfRobotParts; i++) {
