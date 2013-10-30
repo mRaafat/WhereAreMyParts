@@ -3,6 +3,37 @@ import java.util.Queue;
 import java.util.Stack;
 
 public class SearchTree {
+	public void bfs(String [][] grid){
+		Queue<Object> grids = new LinkedList<>();
+		grids.add(grid);
+		while(!grids.isEmpty()){
+			Part [] gridParts = getParts((String[][]) grids.peek());
+			Queue<Object> parts = new LinkedList<>();
+			for(int k=0;k<gridParts.length;k++){
+				parts.add(gridParts[k]);
+			}
+			while(!parts.isEmpty()){
+				String [][] newGrid = doSearch((String [][]) grids.poll(),(Part) parts.poll());
+				boolean solution = isSolution(newGrid);
+				if(solution){
+					System.out.println("Solution");
+				}else{
+					grids.add(newGrid);
+				}
+			}
+		}
+	}
+	
+	public Part [] getParts(String [][] grid){
+		
+		return null;
+	}
+	public String [][] doSearch(String [][] grid, Part p){
+		return null;
+	}
+	public boolean isSolution(String [][] grid){
+		return false;
+	}
 
 
 	/*
