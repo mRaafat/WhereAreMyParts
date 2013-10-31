@@ -4,15 +4,15 @@ import java.util.ArrayList;
 
 public class WhereAreMyParts extends SearchTree {
 
-	String[][] grid;
-	String obstacle;
-	String robotPart;
+	Part[][] grid;
+	// String obstacle;
+	// String robotPart;
 	int gridSize;
 
 	public WhereAreMyParts() {
 		// representation of the robot part and obstacle
-		this.obstacle = "*";
-		this.robotPart = "p";
+		// this.obstacle = "*";
+		// this.robotPart = "p";
 	}
 
 	public void GenGrid() {
@@ -23,7 +23,7 @@ public class WhereAreMyParts extends SearchTree {
 		int numberOfRobotParts = 6 + (int) (Math.random() * (11));
 		int[] robotPartsPositions = new int[numberOfRobotParts];
 
-		grid = new String[randomRows][randomColumns];
+		grid = new Part[randomRows][randomColumns];
 		gridSize = randomRows * randomColumns;
 		// Number of robot parts are minimum 6 and maximum 16 "An assumption"
 
@@ -32,7 +32,7 @@ public class WhereAreMyParts extends SearchTree {
 			robotPartsPositions[i] = (int) (Math.random() * gridSize);
 			int x = (int) (robotPartsPositions[i] / randomColumns);
 			int y = robotPartsPositions[i] - (x * randomColumns);
-			grid[x][y] = "part";
+			grid[x][y] = new Part("part", 1, new int[] { x }, new int[] { y });
 			System.out.println(grid[x][y]);
 		}
 
@@ -49,10 +49,10 @@ public class WhereAreMyParts extends SearchTree {
 			obstaclesPositions[i] = (int) (Math.random() * gridSize);
 			int x = (int) (obstaclesPositions[i] / randomColumns);
 			int y = obstaclesPositions[i] - (x * randomColumns);
-			if (grid[x][y]!=null && grid [x][y].equals("part"))
+			if (grid[x][y] != null && grid[x][y].equals("part"))
 				continue;
 			else
-				grid[x][y] = "*";
+				grid[x][y] = new Part("*", 1, new int[] { x }, new int[] { y });
 		}
 
 		// Inserting the parts in the right position
