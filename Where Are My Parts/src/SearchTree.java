@@ -5,6 +5,20 @@ import java.util.Stack;
 public class SearchTree {
 	int numberOfParts;
 
+	public void printGrid(Part[][] grid){
+		for (int i=0;i<grid.length;i++){
+			for(int j=0;j<grid[i].length;j++){
+				if(grid[i][j] == null){
+					System.out.print("null | ");
+				}else{
+					System.out.print(grid[i][j].name + " | ");
+				}				
+			}
+			System.out.println();
+		}
+	}
+	
+	
 	public void bfs(Part[][] grid, int nparts) {
 		this.numberOfParts = nparts;
 		Queue<Object> grids = new LinkedList<>();
@@ -22,7 +36,7 @@ public class SearchTree {
 						(Part) parts.peek(), "East");
 				Part[][] southGrid = doSearch((Part[][]) grids.peek(),
 						(Part) parts.peek(), "South");
-				Part[][] westGrid = doSearch((Part[][]) grids.poll(),
+				Part[][] westGrid = doSearch((Part[][]) grids.peek(),
 						(Part) parts.poll(), "West");
 
 				if (northGrid.length != 0) {
@@ -63,8 +77,8 @@ public class SearchTree {
 					}
 
 				}
-
 			}
+			grids.poll();
 		}
 	}
 
@@ -72,7 +86,7 @@ public class SearchTree {
 		Queue<Object> parts = new LinkedList<>();
 		for (int i = 0; i < grid.length; i++) {
 			for (int j = 0; j < grid[i].length; j++) {
-				if (grid[i][j].equals(null)) {
+				if (grid[i][j]== null) {
 					// null so nothing here
 				} else {
 					if (grid[i][j].name.equals("*")) {
@@ -93,7 +107,11 @@ public class SearchTree {
 				}
 			}
 		}
-		Part[] p = (Part[]) parts.toArray();
+		Part [] p = new Part[parts.size()];
+		for(int i=0;i<p.length;i++){
+			p[i] = (Part) parts.poll();
+		}
+		//Part[] p = (Part[]) parts.toArray();
 		return p;
 	}
 
@@ -111,7 +129,11 @@ public class SearchTree {
 		switch (direction) {
 		case "North":
 			boolean flag = true;
-			while (flag) {
+			while (true) {
+				System.out.println();
+				printGrid(grid);
+				System.out.println();
+				
 				for (int i = 0; i < p.size; i++) {
 					int x = p.x[i];
 					int y = p.y[i];
@@ -180,18 +202,17 @@ public class SearchTree {
 				for (int a = 0; a < p.size; a++) {
 					p.x[a]--;
 				}
-			}
-			;
-			break;
+			}			
+			//break;
 		case "East":
-			;
-			break;
+			return new Part[0][0];//test
+			//break;
 		case "South":
-			;
-			break;
+			return new Part[0][0];//test
+			//break;
 		case "West":
-			;
-			break;
+			return new Part[0][0];//test
+			//break;
 		}
 
 		return null;
@@ -201,21 +222,21 @@ public class SearchTree {
 		// either solution then return true
 		// if not but can proceed then return false
 		// solution when all the parts have the size of int numberofparts
-
+		
 		for (int i = 0; i < grid.length; i++) {
 			for (int j = 0; j < grid[i].length; j++) {
-				if (grid[i][j].equals(null)) {
+				if (grid[i][j]== null) {
 					// null here
 				} else {
 					if (grid[i][j].equals("*")) {
 						// obstacle here
 					} else {
 						if (grid[i][j].size != numberOfParts) {
+							System.out.println("size " + grid[i][j].size);
 							return false;
 						}
 					}
 				}
-
 			}
 		}
 		return true;
@@ -334,15 +355,24 @@ public class SearchTree {
 	public static void main(String[] args) {
 		String[][] grid = new String[4][3];
 		Part part1 = new Part("part1", 1, new int[] { 0 }, new int[] { 0 });
-		Part part2 = new Part("part2", 1, new int[] { 0 }, new int[] { 2 });
-		Part part3 = new Part("part3", 1, new int[] { 3 }, new int[] { 1 });
+		Part part2 = new Part("part2", 1, new int[] { 2 }, new int[] { 0 });
+		Part part3 = new Part("*", 0, new int[] { 1 }, new int[] { 0 });
 		grid[0][0] = "part";
 		grid[0][2] = "part";
 		grid[1][0] = "*";
 		grid[3][1] = "part";
 		SearchTree k = new SearchTree();
-		Part returnedPart = k.raafatSearch(part1, grid, "East");
-		System.out.println(returnedPart.name);
+		//Part returnedPart = k.raafatSearch(part1, grid, "East");
+		//System.out.println(returnedPart.name);
+		
+		Part [][] testGrid = new Part[3][3];
+		testGrid[0][0] = part1;
+		testGrid[2][0] = part2;
+		testGrid[1][0] = part3;
+		k.printGrid(testGrid);
+		k.bfs(testGrid, 2);
+		k.printGrid(testGrid);
+		
 	}
 
 }
