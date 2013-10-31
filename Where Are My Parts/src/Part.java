@@ -10,4 +10,8 @@ public class Part {
 		this.x = x;
 		this.y = y;
 	}
+
+	public Part() {
+		// TODO Auto-generated constructor stub
+	}
 }
