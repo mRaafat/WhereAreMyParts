@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Stack;
@@ -708,94 +709,111 @@ public class SearchTree {
 	 * has hit, and x+1, and return this part. Repeat these steps for the rest
 	 * of parts, considering the position i am moving in.
 	 */
-	public Part raafatSearch(Part p, String[][] grid, String direction) {
+	// public void Search()
+
+	/***
+	 * 
+	 * @param p
+	 * @param grid
+	 * @param direction
+	 * @return either new part that the old part hit, the same part meaning that
+	 *         there was an obstacle, or a null meaning that it hit the boarders
+	 * @author mohamed
+	 */
+	public Part PartSearch(Part p, Part[][] grid, String direction) {
 		boolean hitSth = false;
-		Part newPart = new Part();
+		Part tempPart = new Part();
+		boolean foundsth = false;
+		// Arrays.sort(p.x);
+		// Arrays.sort(p.y);
 		switch (direction) {
 		case ("North"):
-			// That will be in case of only one part, I will be handling more
-			// than one part later
-
-			for (int i = p.x[0] - 1; i >= 0; i--) {
-				if (grid[i].equals("part")) {
-
-					newPart = new Part("part", 2, new int[] { i, i + 1 },
-							new int[] { p.y[0] });
-					hitSth = true;
-
-				} else {
-					if (grid[i].equals("*")) {
-						hitSth = true;
-						newPart = p;
+			// The part is on the edge of the grid
+			if (p.xCoordinate - 1 == 0)
+				tempPart = null;
+			else {
+				for (int i = p.xCoordinate - 1; i >= 0; i--) {
+					// searching for another part above the part i am using
+					if (!(grid[i][p.yCoordinate].equals(null))
+							&& (grid[i][p.yCoordinate].name.equals("part"))) {
+						tempPart = grid[i][p.yCoordinate];
+						foundsth = true;
+					} else {
+						// searching for an obstacle
+						if (!(grid[i][p.yCoordinate].equals(null))
+								&& grid[i][p.yCoordinate].name.equals("*")) {
+							tempPart = p;
+							foundsth = true;
+						} else
+							continue;
 					}
 				}
-
 			}
-			if (!hitSth)
-				break;
-
+			if (!foundsth) {
+				tempPart = null;
+			}
 		case ("East"):
-
-			for (int j = p.y[0] + 1; j <= grid[0].length; j++) {
-				if (grid[p.x[0]][j] != null && grid[p.x[0]][j].equals("part")) {
-
-					newPart = new Part("part", 2, new int[] { p.x[0] },
-							new int[] { j - 1, j });
-					hitSth = true;
-					break;
-
+			for (int i = p.yCoordinate + 1; i < grid[0].length; i++) {
+				if (!(grid[p.xCoordinate][i].equals(null))
+						&& grid[p.xCoordinate][i].name.equals("part")) {
+					tempPart = grid[p.xCoordinate][i];
+					foundsth = true;
 				} else {
-					if (grid[p.x[0]][j] != null && grid[p.x[0]][j].equals("*")) {
-						hitSth = true;
-						newPart = p;
-						break;
-					}
+					if (!(grid[p.xCoordinate][i].equals(null))
+							&& grid[p.xCoordinate][i].name.equals("*")) {
+						tempPart = p;
+						foundsth = true;
+					} else
+						continue;
+
 				}
-
 			}
-			// if (!hitSth)
-			break;
-		case ("West"):
-
-			for (int k = p.y[0] - 1; k >= 0; k--) {
-				if (grid[p.x[0]][k].equals("part")) {
-
-					newPart = new Part("part", 2, new int[] { p.x[0] },
-							new int[] { k, k + 1 });
-					hitSth = true;
-					// return newPart;
-				} else {
-					if (grid[p.x[0]][k].equals("*")) {
-						hitSth = true;
-						newPart = p;
-					}
-				}
-
+			if (!foundsth) {
+				tempPart = null;
 			}
-			if (!hitSth)
-				break;
 		case ("South"):
-
-			for (int l = p.x[0] + 1; l <= grid.length; l++) {
-				if (grid[p.x[l]][0].equals("part")) {
-
-					newPart = new Part("part", 2, new int[] { l - 1, l },
-							new int[] { p.y[0] });
-					hitSth = true;
-					return newPart;
+			for (int i = p.xCoordinate + 1; i < grid.length; i++) {
+				if (!(grid[i][p.yCoordinate].equals(null))
+						&& grid[i][p.yCoordinate].name.equals("part")) {
+					tempPart = grid[i][p.yCoordinate];
+					foundsth = true;
 				} else {
-					if (grid[p.x[l]][0].equals("*")) {
-						hitSth = true;
-						newPart = p;
-					}
-				}
+					if (!(grid[i][p.yCoordinate].equals(null))
+							&& grid[i][p.yCoordinate].name.equals("*")) {
+						tempPart = p;
+						foundsth = true;
+					} else
+						continue;
 
+				}
 			}
-			if (!hitSth)
-				break;
+			if (!foundsth) {
+				tempPart = null;
+			}
+		case ("West"):
+			for (int i = p.yCoordinate - 1; i >= 0; i++) {
+				if (!(grid[p.xCoordinate][i].equals(null))
+						&& grid[p.xCoordinate][i].name.equals("part")) {
+					tempPart = grid[p.xCoordinate][i];
+					foundsth = true;
+				} else {
+					if (!(grid[p.xCoordinate][i].equals(null))
+							&& grid[p.xCoordinate][i].name.equals("*")) {
+						tempPart = p;
+						foundsth = true;
+					} else
+						continue;
+
+				}
+			}
+			if (!foundsth) {
+				tempPart = null;
+			}
 		}
-		return newPart;
+		return tempPart;
 	}
+
+	// default;
 
 	public static void main(String[] args) {
 		String[][] grid = new String[4][3];
