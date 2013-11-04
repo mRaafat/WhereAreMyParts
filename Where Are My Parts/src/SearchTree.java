@@ -688,29 +688,7 @@ public class SearchTree {
 		return true;
 	}
 
-	/*
-	 * public boolean dfSearch(String[][] grid) { int numberOfParts = 0;
-	 * Stack<Part> robotParts = new Stack<Part>(); for(int i = 0;
-	 * i<grid.length;i++){ for(int j = 0;j<grid[i].length;j++){
-	 * if(grid[i][j].equals("part")){
-	 * 
-	 * Part myPart = new Part(); robotParts.addElement(grid[i][j]); } } }
-	 * 
-	 * return false; }
-	 */
-	/*
-	 * The following method works as follows. It has a switch statment that
-	 * works according to the direction that I am moving in.
-	 * "This method is currently working assuming i moving only one part" If I
-	 * am moving in the north direction, then I save to a variable the x
-	 * coordinate to the next cell that i should move to, because the Y
-	 * coordinate is unchangable in the north direction, if i hit part, i create
-	 * new part with x coordinate list containing the x of the cell that part
-	 * has hit, and x+1, and return this part. Repeat these steps for the rest
-	 * of parts, considering the position i am moving in.
-	 */
-	// public void Search()
-
+	
 	/***
 	 * 
 	 * @param p
