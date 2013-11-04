@@ -34,48 +34,50 @@ public class SearchTree {
 	public void ids(Part[][] grid, int nparts) {
 		this.numberOfParts = nparts;
 		boolean flag = true;
-		if(isSolution(grid)){
+		if (isSolution(grid)) {
 			System.out.println("Main Grid is solution");
-		}else{
+		} else {
 			for (int d = 1; flag; d++) {// condition stopping ids
 				System.out.println("depth" + d);
 				flag = idsHelp(grid, nparts, d);
 			}
 		}
 	}
-	
+
 	public boolean idsHelp(Part[][] grid, int nparts, int depth) {
 		Stack<Object> grids = new Stack<>();
 		Stack<Integer> gridsDepth = new Stack<>();
 		grids.push(grid);
 		gridsDepth.push(1);
 		boolean moreLevel = false;
-		while(!grids.isEmpty()){
-			Part [][] polledGridd = (Part[][]) grids.pop();
+		while (!grids.isEmpty()) {
+			Part[][] polledGridd = (Part[][]) grids.pop();
 			int polledLevel = gridsDepth.pop();
-			if(isSolution((Part[][]) polledGridd)){
+			if (isSolution((Part[][]) polledGridd)) {
 				System.out.println("Solution on top grid");
 				printGrid(polledGridd);
 				return false;
-			}else{
-				if(polledLevel<=depth){
-					pushLevel(grids, polledGridd,gridsDepth,polledLevel);
-				}else{
-					Stack <Object> testMoreLevel = new Stack();
-					Stack <Object> testMoreDepth = new Stack();
-					pushLevel(testMoreLevel,polledGridd,testMoreDepth,polledLevel);
-					if(testMoreLevel.size() > 0){
+			} else {
+				if (polledLevel <= depth) {
+					pushLevel(grids, polledGridd, gridsDepth, polledLevel);
+				} else {
+					Stack<Object> testMoreLevel = new Stack();
+					Stack<Object> testMoreDepth = new Stack();
+					pushLevel(testMoreLevel, polledGridd, testMoreDepth,
+							polledLevel);
+					if (testMoreLevel.size() > 0) {
 						moreLevel = true;
 					}
 				}
 			}
-		}	
+		}
 		return moreLevel;// if true then depth next
-						// if false then no more levels
-		
+							// if false then no more levels
+
 	}
-	
-	public void pushLevel(Stack<Object> grids , Part[][] polledGridd,Stack gridsDepth, int polledLevel){
+
+	public void pushLevel(Stack<Object> grids, Part[][] polledGridd,
+			Stack gridsDepth, int polledLevel) {
 		Part[] gridParts = getParts((Part[][]) polledGridd);
 		Stack<Part> parts = new Stack<Part>();
 		for (int k = 0; k < gridParts.length; k++) {// true bec we
@@ -93,28 +95,28 @@ public class SearchTree {
 					(Part) polledPartW, "West");
 			if (westGrid.length != 0) {
 				grids.push(westGrid);
-				gridsDepth.push(polledLevel+ 1);
+				gridsDepth.push(polledLevel + 1);
 			}
 			// south
 			Part[][] southGrid = doSearch((Part[][]) polledGridd,
 					(Part) polledPartS, "South");
 			if (southGrid.length != 0) {
 				grids.push(southGrid);
-				gridsDepth.push(polledLevel+ 1);
+				gridsDepth.push(polledLevel + 1);
 			}
 			// east
 			Part[][] eastGrid = doSearch((Part[][]) polledGridd,
 					(Part) polledPartE, "East");
 			if (eastGrid.length != 0) {
 				grids.push(eastGrid);
-				gridsDepth.push(polledLevel+ 1);
+				gridsDepth.push(polledLevel + 1);
 			}
 			// north
 			Part[][] northGrid = doSearch((Part[][]) polledGridd,
 					(Part) polledPartN, "North");
 			if (northGrid.length != 0) {
 				grids.push(northGrid);
-				gridsDepth.push(polledLevel+ 1);
+				gridsDepth.push(polledLevel + 1);
 			}
 		}
 	}
@@ -819,7 +821,7 @@ public class SearchTree {
 		testGrid[1][2] = part5;
 		testGrid[1][1] = part6;
 		k.printGrid(testGrid);
-		//k.bfs(testGrid, 5);
+		// k.bfs(testGrid, 5);
 		k.ids(testGrid, 5);
 		// k.printGrid(testGrid);
 
