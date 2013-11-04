@@ -6,7 +6,9 @@ public class Part {
 	int xCoordinate;
 	int yCoordinate;
 	boolean alreadyConnected;
-
+	int pathCost;
+	
+	
 	public Part(String name, int size, int[] x, int[] y) {
 		this.name = name;
 		this.size = size;
@@ -15,6 +17,7 @@ public class Part {
 		this.yCoordinate = y[0];
 		this.y = y;
 		this.alreadyConnected = false;
+		this.pathCost = 1;
 	}
 
 	public Part() {
