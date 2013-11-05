@@ -850,6 +850,66 @@ public class SearchTree {
 	}
 
 
+	ublic boolean dfs(Part[][] grid) {
+		boolean answer = false;
+		int numberOfParts = 0;
+		Stack<Part[][]> grids = new Stack<>();
+		grids.add(grid);
+		Part[][] northGrid = new Part[grid.length][grid[0].length];
+		Part[][] eastGrid = new Part[grid.length][grid[0].length];
+		Part[][] southGrid = new Part[grid.length][grid[0].length];
+		Part[][] westGrid = new Part[grid.length][grid[0].length];
+		Part[][] tempGrid = new Part[grid.length][grid[0].length];
+		Part[][] workingGrid = new Part[grid.length][grid[0].length];
+		Stack<Part> part = new Stack<>();
+		Part workingPart = new Part();
+
+		while (!grids.isEmpty()) {
+			numberOfParts = 0;
+			workingGrid = grids.pop();
+
+			for (int i = 0; i < workingGrid.length; i++) {
+				for (int j = 0; j < workingGrid[0].length; j++) {
+					// To add a part in the stack, the part should be not null,
+					// and name is "Part" and size == 1
+					// Or not null, and name is part and size is more than one,
+					// but not already in the Stack
+					if (!((workingGrid[i][j].equals(null))
+							&& workingGrid[i][j].name.equals("part") && workingGrid[i][j].size == 1)
+							|| !(workingGrid[i][j].equals(null))
+							&& workingGrid[i][j].name.equals("part")
+							&& (workingGrid[i][j].size > 1)
+							&& !(part.contains((workingGrid)[i][j]))) {
+						part.push(workingGrid[i][j]);
+						numberOfParts++;
+
+					}
+				}
+			}
+			if (numberOfParts == 1) {
+				answer = true;
+				break;
+			}
+			while (!part.isEmpty()) {
+				workingPart = part.pop();
+
+				westGrid = doSearch(workingGrid, workingPart, "West");
+				if (westGrid.length > 0)
+					grids.add(westGrid);
+				southGrid = doSearch(workingGrid, workingPart, "South");
+				if (southGrid.length > 0)
+					grids.add(westGrid);
+				eastGrid = doSearch(workingGrid, workingPart, "East");
+				if (eastGrid.length > 0)
+					grids.add(westGrid);
+				northGrid = doSearch(workingGrid, workingPart, "North");
+				if (northGrid.length > 0)
+					grids.add(westGrid);
+
+			}
+		}
+		return answer;
+	}
 
 	public static void main(String[] args) {
 		String[][] grid = new String[4][3];
