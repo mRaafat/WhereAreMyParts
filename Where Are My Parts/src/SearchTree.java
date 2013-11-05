@@ -850,7 +850,7 @@ public class SearchTree {
 	}
 
 
-	ublic boolean dfs(Part[][] grid) {
+	public boolean dfs(Part[][] grid) {
 		boolean answer = false;
 		int numberOfParts = 0;
 		Stack<Part[][]> grids = new Stack<>();
