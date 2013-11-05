@@ -3,7 +3,6 @@ public class Part {
 	int size;
 	int[] x;
 	int[] y;
-	boolean alreadyConnected;
 	int pathCost;
 	int heuristicCost;
 	
