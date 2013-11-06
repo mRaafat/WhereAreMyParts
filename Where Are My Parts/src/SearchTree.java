@@ -49,11 +49,13 @@ public class SearchTree {
 			gridParts[i].pathCost = 0;
 			gridParts[i].heuristicCost = numberOfParts;//number of rows
 		}
+		boolean flag = false;
 		while (!grids.isEmpty()) {
 			Part[][] polledGridd = (Part[][]) grids.poll();
 			int polledCost = gridsCost.poll();
 			if (isSolution((Part[][]) polledGridd)) {
 				System.out.println("Solution to A* 2");
+				flag = true;
 				printGrid(polledGridd);
 				break;
 			} else {
@@ -63,6 +65,9 @@ public class SearchTree {
 				// break;
 				// }
 			}
+		}
+		if(!flag){
+			System.out.println("A* 2 failed to find solution");
 		}
 	}
 	public int distinctRows(Part[][] grid) {
@@ -125,11 +130,13 @@ public class SearchTree {
 			gridParts[i].pathCost = 0;
 			gridParts[i].heuristicCost = numberOfParts;
 		}
+		boolean flag = false;
 		while (!grids.isEmpty()) {
 			Part[][] polledGridd = (Part[][]) grids.poll();
 			int polledCost = gridsCost.poll();
 			if (isSolution((Part[][]) polledGridd)) {
 				System.out.println("Solution to A*");
+				flag = true;
 				printGrid(polledGridd);
 				break;
 			} else {
@@ -139,6 +146,9 @@ public class SearchTree {
 				// break;
 				// }
 			}
+		}
+		if(!flag){
+			System.out.println("A* failed to find sol.");
 		}
 	}
 	
@@ -283,7 +293,7 @@ public class SearchTree {
 			Part[][] polledGridd = (Part[][]) grids.pop();
 			int polledLevel = gridsDepth.pop();
 			if (isSolution((Part[][]) polledGridd)) {
-				System.out.println("Solution on top grid");
+				System.out.println("Solution to IDS");
 				printGrid(polledGridd);
 				return false;
 			} else {
@@ -300,9 +310,11 @@ public class SearchTree {
 				}
 			}
 		}
+		if(!moreLevel){
+			System.out.println("No Solution to IDS");
+		}
 		return moreLevel;// if true then depth next
 							// if false then no more levels
-
 	}
 
 	public void pushLevel(Stack<Object> grids, Part[][] polledGridd,
@@ -1050,17 +1062,17 @@ public class SearchTree {
 		// System.out.println(returnedPart.name);
 		Part[][] testGrid = new Part[3][4];
 		testGrid[0][0] = part1;
-		testGrid[0][2] = part2;
-		testGrid[2][0] = part3;
-		testGrid[2][2] = part4;
-		testGrid[1][2] = part5;
+		//testGrid[0][2] = part2;
+		//testGrid[2][0] = part3;
+		//testGrid[2][2] = part4;
+		//testGrid[1][2] = part5;
 		//testGrid[1][1] = part6;
 		testGrid[1][3] = part7;
 		k.printGrid(testGrid);
-		//k.bfs(testGrid, 6);
-		//k.ids(testGrid, 6);
-		//k.aStar1(testGrid, 6);
-		k.aStar2(testGrid, 6);
+		//k.bfs(testGrid, 2);
+		//k.ids(testGrid, 2);
+		//k.aStar1(testGrid, 2);
+		k.aStar2(testGrid, 2);
 		// k.printGrid(testGrid);
 
 	}
