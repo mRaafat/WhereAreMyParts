@@ -55,6 +55,7 @@ public class WhereAreMyParts extends SearchTree {
 				grid[x][y] = new Part("*", 1, new int[] { x }, new int[] { y });
 		}
 
+	
 		// Inserting the parts in the right position
 
 	}
