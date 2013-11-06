@@ -14,7 +14,12 @@ public class SearchTree {
 				if (grid[i][j] == null) {
 					System.out.print("null | ");
 				} else {
-					System.out.print(grid[i][j].name + " | ");
+					if(grid[i][j].name == "*"){
+						System.out.print("**** | ");
+					}else{
+						System.out.print(grid[i][j].name + " | ");	
+					}
+					
 				}
 			}
 			System.out.println();
@@ -528,6 +533,20 @@ public class SearchTree {
 									return new Part[0][0];
 								} else {
 									p.parent = grid;//trying to trace;
+									for(int ii=0;ii<tempGrid.length;ii++){
+										for(int jj=0;jj<tempGrid.length;jj++){
+											if(tempGrid[ii][jj] == null){
+												
+											}else{
+												if(tempGrid[ii][jj].name == "*"){
+													
+												}else{
+													Part f = copyPart(tempGrid[ii][jj]);
+													tempGrid[ii][jj] = f;
+												}
+											}
+										}
+									}
 									Part [] setParent = getParts(tempGrid);
 									for(int t=0;t<setParent.length;t++){
 										setParent[t].parent = grid;
@@ -586,6 +605,24 @@ public class SearchTree {
 										// numberOfParts++;
 										//printGrid(tempGrid);
 										resultedPart.parent = grid;
+										for(int ii=0;ii<tempGrid.length;ii++){
+											for(int jj=0;jj<tempGrid.length;jj++){
+												if(tempGrid[ii][jj] == null){
+													
+												}else{
+													if(tempGrid[ii][jj].name == "*"){
+														
+													}else{
+														Part f = copyPart(tempGrid[ii][jj]);
+														tempGrid[ii][jj] = f;
+													}
+												}
+											}
+										}
+										Part [] setParent = getParts(tempGrid);
+										for(int t=0;t<setParent.length;t++){
+											setParent[t].parent = grid;
+										}
 										return tempGrid;
 										// return resultedPart;// the new part
 										// created
@@ -638,6 +675,20 @@ public class SearchTree {
 								} else {
 									//printGrid(tempGrid);
 									p.parent = grid;
+									for(int ii=0;ii<tempGrid.length;ii++){
+										for(int jj=0;jj<tempGrid.length;jj++){
+											if(tempGrid[ii][jj] == null){
+												
+											}else{
+												if(tempGrid[ii][jj].name == "*"){
+													
+												}else{
+													Part f = copyPart(tempGrid[ii][jj]);
+													tempGrid[ii][jj] = f;
+												}
+											}
+										}
+									}
 									Part [] setParent = getParts(tempGrid);
 									for(int t=0;t<setParent.length;t++){
 										setParent[t].parent = grid;
@@ -695,6 +746,24 @@ public class SearchTree {
 										// numberOfParts++;
 										//printGrid(tempGrid);
 										resultedPart.parent = grid;
+										for(int ii=0;ii<tempGrid.length;ii++){
+											for(int jj=0;jj<tempGrid.length;jj++){
+												if(tempGrid[ii][jj] == null){
+													
+												}else{
+													if(tempGrid[ii][jj].name == "*"){
+														
+													}else{
+														Part f = copyPart(tempGrid[ii][jj]);
+														tempGrid[ii][jj] = f;
+													}
+												}
+											}
+										}
+										Part [] setParent = getParts(tempGrid);
+										for(int t=0;t<setParent.length;t++){
+											setParent[t].parent = grid;
+										}
 										return tempGrid;
 										// return resultedPart;// the new part
 										// created
@@ -750,6 +819,20 @@ public class SearchTree {
 								} else {
 									//printGrid(tempGrid);
 									p.parent = grid;
+									for(int ii=0;ii<tempGrid.length;ii++){
+										for(int jj=0;jj<tempGrid.length;jj++){
+											if(tempGrid[ii][jj] == null){
+												
+											}else{
+												if(tempGrid[ii][jj].name == "*"){
+													
+												}else{
+													Part f = copyPart(tempGrid[ii][jj]);
+													tempGrid[ii][jj] = f;
+												}
+											}
+										}
+									}
 									Part [] setParent = getParts(tempGrid);
 									for(int t=0;t<setParent.length;t++){
 										setParent[t].parent = grid;
@@ -807,6 +890,24 @@ public class SearchTree {
 										// numberOfParts++;
 										//printGrid(tempGrid);
 										resultedPart.parent = grid;
+										for(int ii=0;ii<tempGrid.length;ii++){
+											for(int jj=0;jj<tempGrid.length;jj++){
+												if(tempGrid[ii][jj] == null){
+													
+												}else{
+													if(tempGrid[ii][jj].name == "*"){
+														
+													}else{
+														Part f = copyPart(tempGrid[ii][jj]);
+														tempGrid[ii][jj] = f;
+													}
+												}
+											}
+										}
+										Part [] setParent = getParts(tempGrid);
+										for(int t=0;t<setParent.length;t++){
+											setParent[t].parent = grid;
+										}
 										return tempGrid;
 										// return resultedPart;// the new part
 										// created
@@ -857,6 +958,20 @@ public class SearchTree {
 								} else {
 									//printGrid(tempGrid);
 									p.parent = grid;
+									for(int ii=0;ii<tempGrid.length;ii++){
+										for(int jj=0;jj<tempGrid.length;jj++){
+											if(tempGrid[ii][jj] == null){
+												
+											}else{
+												if(tempGrid[ii][jj].name == "*"){
+													
+												}else{
+													Part f = copyPart(tempGrid[ii][jj]);
+													tempGrid[ii][jj] = f;
+												}
+											}
+										}
+									}
 									Part [] setParent = getParts(tempGrid);
 									for(int t=0;t<setParent.length;t++){
 										setParent[t].parent = grid;
@@ -916,7 +1031,24 @@ public class SearchTree {
 										// numberOfParts++;
 										//printGrid(tempGrid);
 										resultedPart.parent = grid;
+										for(int ii=0;ii<tempGrid.length;ii++){
+											for(int jj=0;jj<tempGrid.length;jj++){
+												if(tempGrid[ii][jj] == null){
+													
+												}else{
+													if(tempGrid[ii][jj].name == "*"){
+														
+													}else{
+														Part f = copyPart(tempGrid[ii][jj]);
+														tempGrid[ii][jj] = f;
+													}
+												}
+											}
+										}
 										Part [] setParent = getParts(tempGrid);
+										for(int t=0;t<setParent.length;t++){
+											setParent[t].parent = grid;
+										}
 										return tempGrid;
 										// return resultedPart;// the new part
 										// created
@@ -1057,7 +1189,6 @@ public class SearchTree {
 		Stack<Object[][]> s = new Stack<Object[][]>();	
 		s.push(grid);
 		while(getPart((Part[][]) s.peek()).parent != null){
-			System.out.println(s.size());
 			s.push(getPart((Part[][]) s.peek()).parent);
 		}
 		while(!s.isEmpty()){
@@ -1069,13 +1200,14 @@ public class SearchTree {
 	
 	public static void main(String[] args) {
 		String[][] grid = new String[4][3];
-		Part part1 = new Part("part", 1, new int[] { 0 }, new int[] { 0 });
+		Part part1 = new Part("part", 1, new int[] { 1 }, new int[] { 0 });
 		Part part2 = new Part("part", 1, new int[] { 0 }, new int[] { 2 });
 		Part part3 = new Part("part", 1, new int[] { 2 }, new int[] { 0 });
 		Part part4 = new Part("part", 1, new int[] { 2 }, new int[] { 2 });
 		Part part5 = new Part("part", 1, new int[] { 1 }, new int[] { 2 });
 		Part part6 = new Part("*", 0, new int[] { 1 }, new int[] { 1 });
 		Part part7 = new Part("part", 1, new int[] { 1 }, new int[] { 3 });
+		Part part8 = new Part("*", 0, new int[] { 3 }, new int[] { 3 });
 		grid[0][0] = "part";
 		grid[0][2] = "part";
 		grid[1][0] = "*";
@@ -1083,19 +1215,20 @@ public class SearchTree {
 		SearchTree k = new SearchTree();
 		// Part returnedPart = k.raafatSearch(part1, grid, "East");
 		// System.out.println(returnedPart.name);
-		Part[][] testGrid = new Part[3][4];
-		testGrid[0][0] = part1;
+		Part[][] testGrid = new Part[4][4];
+		testGrid[1][0] = part1;
 		testGrid[0][2] = part2;
 		testGrid[2][0] = part3;
 		testGrid[2][2] = part4;
 		testGrid[1][2] = part5;
 		//testGrid[1][1] = part6;
 		testGrid[1][3] = part7;
+		//testGrid[3][3] = part8;
 		//k.printGrid(testGrid);
 		//k.bfs(testGrid, 6);
 		//k.ids(testGrid, 6);
 		//k.aStar1(testGrid, 6);
-		k.aStar2(testGrid, 6);
+		//k.aStar2(testGrid, 6);
 		// k.printGrid(testGrid);
 
 	}
