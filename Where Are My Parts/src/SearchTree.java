@@ -586,7 +586,7 @@ public class SearchTree {
 					int x = p.x[a];
 					int y = p.y[a];
 					x--;
-					tempGrid[x][y] = tempGrid[p.x[a]][p.y[a]];
+					tempGrid[x][y] =p;// tempGrid[p.x[a]][p.y[a]];
 					tempGrid[p.x[a]][p.y[a]] = null;
 				}
 				for (int a = 0; a < p.size; a++) {
@@ -690,7 +690,7 @@ public class SearchTree {
 					int y = p.y[a];
 					// x--;
 					y++;
-					tempGrid[x][y] = tempGrid[p.x[a]][p.y[a]];
+					tempGrid[x][y] = p;//tempGrid[p.x[a]][p.y[a]];
 					tempGrid[p.x[a]][p.y[a]] = null;
 				}
 				for (int a = 0; a < p.size; a++) {
@@ -795,7 +795,7 @@ public class SearchTree {
 					int x = p.x[a];
 					int y = p.y[a];
 					x++;
-					tempGrid[x][y] = tempGrid[p.x[a]][p.y[a]];
+					tempGrid[x][y] = p;//tempGrid[p.x[a]][p.y[a]];
 					tempGrid[p.x[a]][p.y[a]] = null;
 				}
 				for (int a = 0; a < p.size; a++) {
@@ -899,7 +899,7 @@ public class SearchTree {
 					int y = p.y[a];
 					// x--;
 					y--;
-					tempGrid[x][y] = tempGrid[p.x[a]][p.y[a]];
+					tempGrid[x][y] = p;//tempGrid[p.x[a]][p.y[a]];
 					tempGrid[p.x[a]][p.y[a]] = null;
 				}
 				for (int a = 0; a < p.size; a++) {
@@ -1051,7 +1051,7 @@ public class SearchTree {
 		Part part3 = new Part("part", 1, new int[] { 2 }, new int[] { 0 });
 		Part part4 = new Part("part", 1, new int[] { 2 }, new int[] { 2 });
 		Part part5 = new Part("part", 1, new int[] { 1 }, new int[] { 2 });
-		//Part part6 = new Part("*", 0, new int[] { 1 }, new int[] { 1 });
+		Part part6 = new Part("*", 0, new int[] { 1 }, new int[] { 1 });
 		Part part7 = new Part("part", 1, new int[] { 1 }, new int[] { 3 });
 		grid[0][0] = "part";
 		grid[0][2] = "part";
@@ -1062,17 +1062,17 @@ public class SearchTree {
 		// System.out.println(returnedPart.name);
 		Part[][] testGrid = new Part[3][4];
 		testGrid[0][0] = part1;
-		//testGrid[0][2] = part2;
-		//testGrid[2][0] = part3;
-		//testGrid[2][2] = part4;
-		//testGrid[1][2] = part5;
+		testGrid[0][2] = part2;
+		testGrid[2][0] = part3;
+		testGrid[2][2] = part4;
+		testGrid[1][2] = part5;
 		//testGrid[1][1] = part6;
 		testGrid[1][3] = part7;
 		k.printGrid(testGrid);
-		//k.bfs(testGrid, 2);
-		//k.ids(testGrid, 2);
-		//k.aStar1(testGrid, 2);
-		k.aStar2(testGrid, 2);
+		k.bfs(testGrid, 6);
+		//k.ids(testGrid, 6);
+		//k.aStar1(testGrid, 6);
+		//k.aStar2(testGrid, 6);
 		// k.printGrid(testGrid);
 
 	}
