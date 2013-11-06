@@ -34,27 +34,86 @@ public class SearchTree {
 		copy.heuristicCost = original.heuristicCost;
 		return copy;
 	}
-
-	public int distinctParts(Part[] gridParts) {
-		LinkedList p = new LinkedList<>();
+	
+	/*
+	 * A* Heuristic 2
+	 */
+	public void aStar2(Part[][] grid, int nparts) {
+		this.numberOfParts = nparts;
+		Queue<Object> grids = new LinkedList<>();
+		Queue<Integer> gridsCost = new LinkedList<>();
+		grids.add(grid);
+		gridsCost.add(0);
+		Part[] gridParts = getParts(grid);
 		for (int i = 0; i < gridParts.length; i++) {
-			if (!p.contains(gridParts[i])) {
-				p.add(gridParts[i]);
+			gridParts[i].pathCost = 0;
+			gridParts[i].heuristicCost = numberOfParts;//number of rows
+		}
+		while (!grids.isEmpty()) {
+			Part[][] polledGridd = (Part[][]) grids.poll();
+			int polledCost = gridsCost.poll();
+			if (isSolution((Part[][]) polledGridd)) {
+				System.out.println("Solution to A* 2");
+				printGrid(polledGridd);
+				break;
+			} else {
+				// boolean cont =
+				aStar2heuristic(grids, polledGridd, gridsCost, polledCost);
+				// if(!cont){
+				// break;
+				// }
 			}
 		}
-		return p.size();
 	}
-
-	public void calculateCostHeuristic(Part[][] grid, Part[] gridParts) {
-
+	public int distinctRows(Part[][] grid) {
+		int rows = 0;
+		for (int i = 0; i < grid.length; i++) {
+			for(int j=0;j<grid[i].length;j++){
+				if(grid[i][j] != null){
+					if(grid[i][j].name == "part"){
+						rows++;
+						break;
+					}
+				}
+			}
+			continue;
+		}
+		return rows;
+	}
+	
+	public void calculateCostHeuristic2(Part[][] grid, Part[] gridParts) {
+		int hn = distinctRows(grid);
 		for (int i = 0; i < gridParts.length; i++) {
-			//int gn = 0; //grid.length * grid[0].length * gridParts[i].size;
-			int hn = distinctParts(gridParts);
-			//gridParts[i].pathCost = gridParts[i].pathCost + gn;
 			gridParts[i].heuristicCost = hn;
 		}
 	}
-
+	
+	public void aStar2heuristic(Queue grids, Part[][] polledGridd,
+			Queue gridsCost, int polledCost) {
+		/*
+		 * this method takes the polled grid and takes the parts out of it
+		 * -calculates f(n) for them and enqueue them into the queue from least
+		 * to maximum This Heuristic is about expanding the grid with less
+		 * number of parts before expanding the rest.
+		 */
+		Part[] gridParts = getParts(polledGridd);
+		calculateCostHeuristic2(polledGridd, gridParts);
+		for (int i = 0; i < gridParts.length; i++) {// bubble sort array to f(n)
+			for (int x = 1; x < gridParts.length - i; x++) {
+				if (gridParts[x - 1].pathCost + gridParts[x - 1].heuristicCost > gridParts[x].pathCost
+						+ gridParts[x].heuristicCost) {
+					Part temp = gridParts[x - 1];
+					gridParts[x - 1] = gridParts[x];
+					gridParts[x] = temp;
+				}
+			}
+		}
+		expandParts(grids, polledGridd, gridParts, gridsCost, polledCost);
+	}
+	/*
+	 * A* Heuristic 1
+	 */
+	
 	public void aStar1(Part[][] grid, int nparts) {
 		this.numberOfParts = nparts;
 		Queue<Object> grids = new LinkedList<>();
@@ -67,10 +126,8 @@ public class SearchTree {
 			gridParts[i].heuristicCost = numberOfParts;
 		}
 		while (!grids.isEmpty()) {
-			System.out.println("A");
 			Part[][] polledGridd = (Part[][]) grids.poll();
 			int polledCost = gridsCost.poll();
-			System.out.println(polledGridd);
 			if (isSolution((Part[][]) polledGridd)) {
 				System.out.println("Solution to A*");
 				printGrid(polledGridd);
@@ -84,7 +141,28 @@ public class SearchTree {
 			}
 		}
 	}
+	
+	public int distinctParts(Part[] gridParts) {
+		LinkedList p = new LinkedList<>();
+		for (int i = 0; i < gridParts.length; i++) {
+			if (!p.contains(gridParts[i])) {
+				p.add(gridParts[i]);
+			}
+		}
+		return p.size();
+	}
 
+	public void calculateCostHeuristic1(Part[][] grid, Part[] gridParts) {
+
+		for (int i = 0; i < gridParts.length; i++) {
+			//int gn = 0; //grid.length * grid[0].length * gridParts[i].size;
+			int hn = distinctParts(gridParts);
+			//gridParts[i].pathCost = gridParts[i].pathCost + gn;
+			gridParts[i].heuristicCost = hn;
+		}
+	}
+
+	
 	public void expandParts(Queue grids, Part[][] polledGridd,
 			Part[] gridParts, Queue gridsCost, int polledCost) {
 		Queue<Part> parts = new LinkedList<Part>();
@@ -131,7 +209,6 @@ public class SearchTree {
 	}
 
 	private void sortGrids(Queue grids, Queue<Integer> gridsCost) {
-		System.out.println(grids.size());
 		Object [] sortGrids = new Object[grids.size()];
 		int [] sortCost = new int[gridsCost.size()];
 		int sizeOfGrids = grids.size();
@@ -168,7 +245,7 @@ public class SearchTree {
 		 * number of parts before expanding the rest.
 		 */
 		Part[] gridParts = getParts(polledGridd);
-		calculateCostHeuristic(polledGridd, gridParts);
+		calculateCostHeuristic1(polledGridd, gridParts);
 		for (int i = 0; i < gridParts.length; i++) {// bubble sort array to f(n)
 			for (int x = 1; x < gridParts.length - i; x++) {
 				if (gridParts[x - 1].pathCost + gridParts[x - 1].heuristicCost > gridParts[x].pathCost
@@ -179,10 +256,11 @@ public class SearchTree {
 				}
 			}
 		}
-
 		expandParts(grids, polledGridd, gridParts, gridsCost, polledCost);
 	}
-
+/*
+ * Iterative DEEPING SEARCH
+ */
 	public void ids(Part[][] grid, int nparts) {
 		this.numberOfParts = nparts;
 		boolean flag = true;
@@ -190,7 +268,6 @@ public class SearchTree {
 			System.out.println("Main Grid is solution");
 		} else {
 			for (int d = 1; flag; d++) {// condition stopping ids
-				System.out.println("depth" + d);
 				flag = idsHelp(grid, nparts, d);
 			}
 		}
@@ -272,7 +349,9 @@ public class SearchTree {
 			}
 		}
 	}
-
+	/*
+	 * BREADTH FIRST SEARCH
+	 */
 	public void bfs(Part[][] grid, int nparts) {
 		this.numberOfParts = nparts;
 		Queue<Object> grids = new LinkedList<>();
@@ -960,7 +1039,8 @@ public class SearchTree {
 		Part part3 = new Part("part", 1, new int[] { 2 }, new int[] { 0 });
 		Part part4 = new Part("part", 1, new int[] { 2 }, new int[] { 2 });
 		Part part5 = new Part("part", 1, new int[] { 1 }, new int[] { 2 });
-		Part part6 = new Part("*", 0, new int[] { 1 }, new int[] { 1 });
+		//Part part6 = new Part("*", 0, new int[] { 1 }, new int[] { 1 });
+		Part part7 = new Part("part", 1, new int[] { 1 }, new int[] { 3 });
 		grid[0][0] = "part";
 		grid[0][2] = "part";
 		grid[1][0] = "*";
@@ -968,17 +1048,19 @@ public class SearchTree {
 		SearchTree k = new SearchTree();
 		// Part returnedPart = k.raafatSearch(part1, grid, "East");
 		// System.out.println(returnedPart.name);
-		Part[][] testGrid = new Part[3][3];
+		Part[][] testGrid = new Part[3][4];
 		testGrid[0][0] = part1;
 		testGrid[0][2] = part2;
 		testGrid[2][0] = part3;
-		//testGrid[2][2] = part4;
-		//testGrid[1][2] = part5;
-		testGrid[1][1] = part6;
+		testGrid[2][2] = part4;
+		testGrid[1][2] = part5;
+		//testGrid[1][1] = part6;
+		testGrid[1][3] = part7;
 		k.printGrid(testGrid);
-		// k.bfs(testGrid, 5);
-		//k.ids(testGrid, 5);
-		k.aStar1(testGrid, 3);
+		//k.bfs(testGrid, 6);
+		//k.ids(testGrid, 6);
+		//k.aStar1(testGrid, 6);
+		//k.aStar2(testGrid, 6);
 		// k.printGrid(testGrid);
 
 	}
