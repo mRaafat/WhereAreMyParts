@@ -1060,7 +1060,7 @@ public class SearchTree {
 		//k.bfs(testGrid, 6);
 		//k.ids(testGrid, 6);
 		//k.aStar1(testGrid, 6);
-		//k.aStar2(testGrid, 6);
+		k.aStar2(testGrid, 6);
 		// k.printGrid(testGrid);
 
 	}
