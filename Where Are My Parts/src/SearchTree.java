@@ -940,106 +940,65 @@ public class SearchTree {
 		return true;
 	}
 
-	/***
-	 * 
-	 * @param p
-	 * @param grid
-	 * @param direction
-	 * @return either new part that the old part hit, the same part meaning that
-	 *         there was an obstacle, or a null meaning that it hit the boarders
-	 * @author mohamed
-	 */
-	public Part PartSearch(Part p, Part[][] grid, String direction) {
-		boolean hitSth = false;
-		Part tempPart = new Part();
-		boolean foundsth = false;
-		// Arrays.sort(p.x);
-		// Arrays.sort(p.y);
-		switch (direction) {
-		case ("North"):
-			// The part is on the edge of the grid
-			if (p.xCoordinate - 1 == 0)
-				tempPart = null;
-			else {
-				for (int i = p.xCoordinate - 1; i >= 0; i--) {
-					// searching for another part above the part i am using
-					if (!(grid[i][p.yCoordinate].equals(null))
-							&& (grid[i][p.yCoordinate].name.equals("part"))) {
-						tempPart = grid[i][p.yCoordinate];
-						foundsth = true;
-					} else {
-						// searching for an obstacle
-						if (!(grid[i][p.yCoordinate].equals(null))
-								&& grid[i][p.yCoordinate].name.equals("*")) {
-							tempPart = p;
-							foundsth = true;
-						} else
-							continue;
+	public boolean dfs(Part[][] grid) {
+		boolean answer = false;
+		int numberOfParts = 0;
+		Stack<Part[][]> grids = new Stack<>();
+		grids.add(grid);
+		Part[][] northGrid = new Part[grid.length][grid[0].length];
+		Part[][] eastGrid = new Part[grid.length][grid[0].length];
+		Part[][] southGrid = new Part[grid.length][grid[0].length];
+		Part[][] westGrid = new Part[grid.length][grid[0].length];
+		Part[][] tempGrid = new Part[grid.length][grid[0].length];
+		Part[][] workingGrid = new Part[grid.length][grid[0].length];
+		Stack<Part> part = new Stack<>();
+		Part workingPart = new Part();
+
+		while (!grids.isEmpty()) {
+			numberOfParts = 0;
+			workingGrid = grids.pop();
+
+			for (int i = 0; i < workingGrid.length; i++) {
+				for (int j = 0; j < workingGrid[0].length; j++) {
+					// To add a part in the stack, the part should be not null,
+					// and name is "Part" and size == 1
+					// Or not null, and name is part and size is more than one,
+					// but not already in the Stack
+					if (!((workingGrid[i][j].equals(null))
+							&& workingGrid[i][j].name.equals("part") && workingGrid[i][j].size == 1)
+							|| !(workingGrid[i][j].equals(null))
+							&& workingGrid[i][j].name.equals("part")
+							&& (workingGrid[i][j].size > 1)
+							&& !(part.contains((workingGrid)[i][j]))) {
+						part.push(workingGrid[i][j]);
+						numberOfParts++;
+
 					}
 				}
 			}
-			if (!foundsth) {
-				tempPart = null;
+			if (numberOfParts == 1) {
+				answer = true;
+				break;
 			}
-		case ("East"):
-			for (int i = p.yCoordinate + 1; i < grid[0].length; i++) {
-				if (!(grid[p.xCoordinate][i].equals(null))
-						&& grid[p.xCoordinate][i].name.equals("part")) {
-					tempPart = grid[p.xCoordinate][i];
-					foundsth = true;
-				} else {
-					if (!(grid[p.xCoordinate][i].equals(null))
-							&& grid[p.xCoordinate][i].name.equals("*")) {
-						tempPart = p;
-						foundsth = true;
-					} else
-						continue;
+			while (!part.isEmpty()) {
+				workingPart = part.pop();
 
-				}
-			}
-			if (!foundsth) {
-				tempPart = null;
-			}
-		case ("South"):
-			for (int i = p.xCoordinate + 1; i < grid.length; i++) {
-				if (!(grid[i][p.yCoordinate].equals(null))
-						&& grid[i][p.yCoordinate].name.equals("part")) {
-					tempPart = grid[i][p.yCoordinate];
-					foundsth = true;
-				} else {
-					if (!(grid[i][p.yCoordinate].equals(null))
-							&& grid[i][p.yCoordinate].name.equals("*")) {
-						tempPart = p;
-						foundsth = true;
-					} else
-						continue;
+				westGrid = doSearch(workingGrid, workingPart, "West");
+				if (westGrid.length > 0)
+					grids.add(westGrid);
+				southGrid = doSearch(workingGrid, workingPart, "South");
+				if (southGrid.length > 0)
+					grids.add(westGrid);
+				eastGrid = doSearch(workingGrid, workingPart, "East");
+				if (eastGrid.length > 0)
+					grids.add(westGrid);
+				northGrid = doSearch(workingGrid, workingPart, "North");
+				if (northGrid.length > 0)
+					grids.add(westGrid);
 
-				}
-			}
-			if (!foundsth) {
-				tempPart = null;
-			}
-		case ("West"):
-			for (int i = p.yCoordinate - 1; i >= 0; i++) {
-				if (!(grid[p.xCoordinate][i].equals(null))
-						&& grid[p.xCoordinate][i].name.equals("part")) {
-					tempPart = grid[p.xCoordinate][i];
-					foundsth = true;
-				} else {
-					if (!(grid[p.xCoordinate][i].equals(null))
-							&& grid[p.xCoordinate][i].name.equals("*")) {
-						tempPart = p;
-						foundsth = true;
-					} else
-						continue;
-
-				}
-			}
-			if (!foundsth) {
-				tempPart = null;
 			}
 		}
-		return tempPart;
+		return answer;
 	}
 
 	// default;
