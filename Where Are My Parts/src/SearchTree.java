@@ -1197,6 +1197,72 @@ public class SearchTree {
 		
 	}
 	
+	/*
+	 * Greedy Search
+	 */
+
+	public boolean greedyH1(Part[][] grid) {
+		boolean result = false;
+		boolean stoppingCondition = false;
+
+		Part[][] workingGrid = new Part[grid.length][grid[0].length];
+		Queue<Integer> gridCost = new LinkedList<Integer>();
+		Queue<Part[][]> grids = new LinkedList<Part[][]>();
+		Part copyNorth = new Part();
+		Part copyEast = new Part();
+		Part copySouth = new Part();
+		Part copyWest = new Part();
+
+		grids.add(grid);
+		gridCost.add(0);
+
+		while (!grids.isEmpty()) {
+
+			workingGrid = grids.poll();
+			gridCost.poll();
+			Part[] parts = getParts(workingGrid);
+			if (parts.length == 1) {
+				result = true;
+				break;
+			}
+			for (int i = 0; i < parts.length; i++) {
+				copyNorth = copyPart(parts[i]);
+				copyEast = copyPart(parts[i]);
+				copyWest = copyPart(parts[i]);
+				copySouth = copyPart(parts[i]);
+				Part[][] northGrid = doSearch(workingGrid, copyNorth, "North");
+				if (northGrid.length != 0) {
+					grids.add(northGrid);
+					gridCost.add(copyNorth.pathCost);
+				}
+
+				Part[][] eastGrid = doSearch(workingGrid, copyEast, "East");
+				if (eastGrid.length != 0) {
+					grids.add(eastGrid);
+					gridCost.add(copyEast.pathCost);
+				}
+
+				Part[][] southGrid = doSearch(workingGrid, copySouth, "South");
+				if (southGrid.length != 0) {
+					grids.add(southGrid);
+					gridCost.add(copySouth.pathCost);
+				}
+
+				Part[][] westGrid = doSearch(workingGrid, copyWest, "West");
+				if (westGrid.length != 0) {
+					grids.add(westGrid);
+					gridCost.add(copyWest.pathCost);
+				}
+
+			}
+			sortGrids(grids, gridCost);
+
+		}
+		if (result == true)
+			return true;
+		else
+			return false;
+	}
 	
 	public static void main(String[] args) {
 		String[][] grid = new String[4][3];
