@@ -39,6 +39,8 @@ public class SearchTree {
 		copy.pathCost = original.pathCost;
 		copy.heuristicCost = original.heuristicCost;
 		copy.parent = original.parent;
+		copy.hitPartX = original.hitPartX;
+		copy.hitPartY = original.hitPartY;
 		return copy;
 	}
 
@@ -54,7 +56,7 @@ public class SearchTree {
 		Part[] gridParts = getParts(grid);
 		for (int i = 0; i < gridParts.length; i++) {
 			gridParts[i].pathCost = 0;
-			gridParts[i].heuristicCost = numberOfParts;// number of rows
+			gridParts[i].heuristicCost = distinctRows(grid);// number of rows
 		}
 		boolean flag = false;
 		while (!grids.isEmpty()) {
@@ -111,7 +113,7 @@ public class SearchTree {
 		 * this method takes the polled grid and takes the parts out of it
 		 * -calculates f(n) for them and enqueue them into the queue from least
 		 * to maximum This Heuristic is about expanding the grid with less
-		 * number of parts before expanding the rest.
+		 * number of rows that parts place before expanding the rest.
 		 */
 		Part[] gridParts = getParts(polledGridd);
 		calculateCostHeuristic2(polledGridd, gridParts);
@@ -180,10 +182,10 @@ public class SearchTree {
 	}
 
 	public void calculateCostHeuristic1(Part[][] grid, Part[] gridParts) {
-
+		int hn = distinctParts(gridParts);
 		for (int i = 0; i < gridParts.length; i++) {
 			// int gn = 0; //grid.length * grid[0].length * gridParts[i].size;
-			int hn = distinctParts(gridParts);
+			
 			// gridParts[i].pathCost = gridParts[i].pathCost + gn;
 			gridParts[i].heuristicCost = hn;
 		}
@@ -553,6 +555,8 @@ public class SearchTree {
 								if (sameGrid) {
 									return new Part[0][0];
 								} else {
+									p.pathCost = p.pathCost
+											+ (p.size * countMoves);
 									p.parent = grid;// trying to trace;
 									for (int ii = 0; ii < tempGrid.length; ii++) {
 										for (int jj = 0; jj < tempGrid[ii].length; jj++) {
@@ -572,6 +576,7 @@ public class SearchTree {
 									for (int t = 0; t < setParent.length; t++) {
 										setParent[t].parent = grid;
 									}
+									
 									return tempGrid;// causes infinite loop
 								}
 								// return p;// return the same part, no changes
@@ -619,9 +624,10 @@ public class SearchTree {
 										}
 										resultedPart.pathCost = p.pathCost
 												+ (p.size * countMoves);
-										resultedPart.heuristicCost = p.heuristicCost
-												- tempGrid[x - 1][y].size;
-
+										//resultedPart.heuristicCost = p.heuristicCost
+											//	- tempGrid[x - 1][y].size;
+										resultedPart.hitPartX = p.hitPartX;
+										resultedPart.hitPartY = p.hitPartY;
 										resultedPart.parent = p.parent;
 										// tempGrid[x][y] = resultedPart;
 										// tempGrid[x - 1][y] = resultedPart;
@@ -697,6 +703,8 @@ public class SearchTree {
 									return new Part[0][0];
 								} else {
 									// printGrid(tempGrid);
+									p.pathCost = p.pathCost
+											+ (p.size * countMoves);
 									p.parent = grid;
 									for (int ii = 0; ii < tempGrid.length; ii++) {
 										for (int jj = 0; jj < tempGrid[ii].length; jj++) {
@@ -764,11 +772,13 @@ public class SearchTree {
 										}
 										resultedPart.pathCost = p.pathCost
 												+ p.size * countMoves;
-										resultedPart.heuristicCost = p.heuristicCost
-												- tempGrid[x][y + 1].size;// tempGrid[x][y]
+										//resultedPart.heuristicCost = p.heuristicCost
+											//	- tempGrid[x][y + 1].size;// tempGrid[x][y]
 																			// =
 																			// resultedPart;
 										resultedPart.parent = p.parent;
+										resultedPart.hitPartX = p.hitPartX;
+										resultedPart.hitPartY = p.hitPartY;
 										// tempGrid[x - 1][y] = resultedPart;
 										// numberOfParts++;
 										// printGrid(tempGrid);
@@ -845,6 +855,8 @@ public class SearchTree {
 									return new Part[0][0];
 								} else {
 									// printGrid(tempGrid);
+									p.pathCost = p.pathCost
+											+ (p.size * countMoves);
 									p.parent = grid;
 									for (int ii = 0; ii < tempGrid.length; ii++) {
 										for (int jj = 0; jj < tempGrid[ii].length; jj++) {
@@ -913,9 +925,11 @@ public class SearchTree {
 										}
 										resultedPart.pathCost = p.pathCost
 												+ p.size * countMoves;
-										resultedPart.heuristicCost = p.heuristicCost
-												- tempGrid[x + 1][y].size;
+										//resultedPart.heuristicCost = p.heuristicCost
+											//	- tempGrid[x + 1][y].size;
 										resultedPart.parent = p.parent;
+										resultedPart.hitPartX = p.hitPartX;
+										resultedPart.hitPartY = p.hitPartY;
 										// numberOfParts++;
 										// printGrid(tempGrid);
 										resultedPart.parent = grid;
@@ -986,6 +1000,8 @@ public class SearchTree {
 									return new Part[0][0];
 								} else {
 									// printGrid(tempGrid);
+									p.pathCost = p.pathCost
+											+ (p.size * countMoves);
 									p.parent = grid;
 									for (int ii = 0; ii < tempGrid.length; ii++) {
 										for (int jj = 0; jj < tempGrid[ii].length; jj++) {
@@ -1054,9 +1070,11 @@ public class SearchTree {
 										}
 										resultedPart.pathCost = p.pathCost
 												+ p.size * countMoves;
-										resultedPart.heuristicCost = p.heuristicCost
-												- tempGrid[x][y - 1].size;
+										//resultedPart.heuristicCost = p.heuristicCost
+											//	- tempGrid[x][y - 1].size;
 										resultedPart.parent = p.parent;
+										resultedPart.hitPartX = p.hitPartX;
+										resultedPart.hitPartY = p.hitPartY;
 										// tempGrid[x][y] = resultedPart;
 										// tempGrid[x - 1][y] = resultedPart;
 										// numberOfParts++;
@@ -1336,9 +1354,9 @@ public class SearchTree {
 		 //k.aStar1(testGrid, 6);
 		 //k.aStar2(testGrid, 6);
 		// k.printGrid(testGrid);
-		 k.bfs(grid, 4);
-		 k.ids(grid, 4);
-		 k.aStar1(grid, 4);
+		 //k.bfs(grid, 4);
+		 //k.ids(grid, 4);
+		 //k.aStar1(grid, 4);
 		 k.aStar2(grid, 4);
 	}
 
