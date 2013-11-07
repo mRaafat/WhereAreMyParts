@@ -5,6 +5,8 @@ public class Part {
 	int[] y;
 	int pathCost;
 	int heuristicCost;
+	int hitPartX;
+	int hitPartY;
 	Object [][] parent;
 	
 	public Part(String name, int size, int[] x, int[] y) {
@@ -15,6 +17,8 @@ public class Part {
 		this.pathCost = 1;
 		this.heuristicCost = 0;
 		this.parent = null;
+		int hitPartX = 0;
+		int hitPartY = 0;
 	}
 
 	public Part() {
