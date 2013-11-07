@@ -19,8 +19,8 @@ public class WhereAreMyParts extends SearchTree {
 	public Part[][] GenGrid() {
 		// int randomRows,randomColumns = 0;
 		// at least one
-		int randomRows = 1 + (int) (Math.random() * 100);
-		int randomColumns = 1 + (int) (Math.random() * 100);
+		int randomRows = 1 + (int) (Math.random() * 10);
+		int randomColumns = 1 + (int) (Math.random() * 10);
 		int numberOfRobotParts = 6 + (int) (Math.random() * (11));
 		int[] robotPartsPositions = new int[numberOfRobotParts];
 		this.nparts = numberOfRobotParts;
