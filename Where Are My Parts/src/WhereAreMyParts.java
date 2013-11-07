@@ -8,6 +8,7 @@ public class WhereAreMyParts extends SearchTree {
 	// String obstacle;
 	// String robotPart;
 	int gridSize;
+	int nparts;
 
 	public WhereAreMyParts() {
 		// representation of the robot part and obstacle
@@ -15,14 +16,14 @@ public class WhereAreMyParts extends SearchTree {
 		// this.robotPart = "p";
 	}
 
-	public void GenGrid() {
+	public Part[][] GenGrid() {
 		// int randomRows,randomColumns = 0;
 		// at least one
 		int randomRows = 1 + (int) (Math.random() * 100);
 		int randomColumns = 1 + (int) (Math.random() * 100);
 		int numberOfRobotParts = 6 + (int) (Math.random() * (11));
 		int[] robotPartsPositions = new int[numberOfRobotParts];
-
+		this.nparts = numberOfRobotParts;
 		grid = new Part[randomRows][randomColumns];
 		gridSize = randomRows * randomColumns;
 		// Number of robot parts are minimum 6 and maximum 16 "An assumption"
@@ -55,17 +56,49 @@ public class WhereAreMyParts extends SearchTree {
 				grid[x][y] = new Part("*", 1, new int[] { x }, new int[] { y });
 		}
 
-	
+		return grid;
 		// Inserting the parts in the right position
 
 	}
 
-	public ArrayList<String> Search() {
-		return null;
+	public void search(Part[][] grid, String Strategy, boolean visualize) {
+		SearchTree st = new SearchTree();
+		switch (Strategy) {
+		case "BF":
+			st.printGrid(grid);
+			st.bfs(grid, this.nparts);
+			break;
+		case "DF":
+			;
+			break;
+		case "ID":
+			st.printGrid(grid);
+			st.ids(grid, this.nparts);
+			break;
+		case "GR1":
+			;
+			break;
+		case "GR2":
+			;
+			break;
+		case "AS1":
+			st.printGrid(grid);
+			st.aStar1(grid, this.nparts);
+			break;
+		case "AS2":
+			st.printGrid(grid);
+			st.aStar2(grid, this.nparts);
+			break;
+		default:
+			System.out.println("Invalid");
+		}
 	}
 
 	public static void main(String[] args) {
 		WhereAreMyParts myObject = new WhereAreMyParts();
-		myObject.GenGrid();
+		Part[][] p = myObject.GenGrid();
+		myObject.search(p, "ID", true);
+		// myObject.search(p, "AS2", true);
+
 	}
 }
