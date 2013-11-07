@@ -1313,6 +1313,130 @@ public class SearchTree {
 		else
 			return false;
 	}
+	/*
+	 * Heurestic two, Manhaten distance
+	 */
+	public int getMax(int[] array) {
+		int maximum = array[0];
+		for (int i = 1; i < array.length; i++) {
+			if (array[i] >= maximum) {
+				maximum = array[i];
+			}
+		}
+		return maximum;
+	}
+
+	public int getMin(int[] array) {
+		int minimum = array[0];
+		for (int i = 1; i < array.length; i++) {
+			if (array[i] <= minimum) {
+				minimum = array[i];
+			}
+		}
+		return minimum;
+	}
+
+	public int getPosition(int[] array, int number) {
+		int position = 0;
+		for (int i = 0; i < array.length; i++) {
+			if (array[i] == number) {
+				position = i;
+			}
+		}
+		return position;
+
+	}
+
+	public int manhatenCost(Part part, String direction) {
+		int cost = 0;
+		switch (direction) {
+		case "North":
+			cost = (Math.abs(getMax(part.x) - part.hitPartX) + (Math
+					.abs(part.y[getPosition(part.x, getMax(part.x))]
+							- part.hitPartY)));
+			break;
+
+		case "East":
+			cost = (Math.abs(getMax(part.y) - part.hitPartY) + (Math
+					.abs(part.x[getPosition(part.y, getMax(part.y))]
+							- part.hitPartX)));
+			break;
+		case "South":
+			cost = (Math.abs(getMin(part.y) - part.hitPartY) + (Math
+					.abs(part.x[getPosition(part.y, getMin(part.y))]
+							- part.hitPartX)));
+			break;
+		case "West":
+			cost = (Math.abs(getMin(part.y) - part.hitPartY) + (Math
+					.abs(part.x[getPosition(part.y, getMin(part.y))]
+							- part.hitPartX)));
+			break;
+
+		}
+		return cost;
+	}
+
+	public boolean greedyH2(Part[][] grid) {
+		boolean result = false;
+
+		Part[][] workingGrid = new Part[grid.length][grid[0].length];
+		Queue<Integer> gridCost = new LinkedList<Integer>();
+		Queue<Part[][]> grids = new LinkedList<Part[][]>();
+		Part copyNorth = new Part();
+		Part copyEast = new Part();
+		Part copySouth = new Part();
+		Part copyWest = new Part();
+
+		grids.add(grid);
+		gridCost.add(0);
+
+		while (!grids.isEmpty()) {
+			workingGrid = grids.poll();
+			gridCost.poll();
+			Part[] parts = getParts(workingGrid);
+			if (parts.length == 1) {
+				result = true;
+				break;
+			}
+			for (int i = 0; i < parts.length; i++) {
+				copyNorth = copyPart(parts[i]);
+				copyEast = copyPart(parts[i]);
+				copyWest = copyPart(parts[i]);
+				copySouth = copyPart(parts[i]);
+				Part[][] northGrid = doSearch(workingGrid, copyNorth, "North");
+				if (northGrid.length != 0) {
+					grids.add(northGrid);
+					gridCost.add(manhatenCost(copyNorth, "North"));
+				}
+
+				Part[][] eastGrid = doSearch(workingGrid, copyEast, "East");
+				if (eastGrid.length != 0) {
+					grids.add(eastGrid);
+					gridCost.add(manhatenCost(copyEast, "East"));
+				}
+
+				Part[][] southGrid = doSearch(workingGrid, copySouth, "South");
+				if (southGrid.length != 0) {
+					grids.add(southGrid);
+					gridCost.add(manhatenCost(copySouth, "South"));
+				}
+
+				Part[][] westGrid = doSearch(workingGrid, copyWest, "West");
+				if (westGrid.length != 0) {
+					grids.add(westGrid);
+					gridCost.add(manhatenCost(copyWest, "West"));
+				}
+
+			}
+			sortGrids(grids, gridCost);
+
+		}
+		if (result == true)
+			return true;
+		else
+			return false;
+	}
+
 	
 	public static void main(String[] args) {
 		
