@@ -1154,67 +1154,68 @@ public class SearchTree {
 		return true;
 	}
 
-	public boolean dfs(Part[][] grid) {
+public boolean dfs(Part[][] grid, int numOfParts) {
+		this.numberOfParts = numOfParts;
 		boolean answer = false;
-		int numberOfParts = 0;
 		Stack<Part[][]> grids = new Stack<>();
-		grids.add(grid);
+		Stack<Part> part = new Stack<Part>();
+
+		Part workingPart = new Part();
+		Part copyNorth = new Part();
+		Part copyEast = new Part();
+		Part copySouth = new Part();
+		Part copyWest = new Part();
+
 		Part[][] northGrid = new Part[grid.length][grid[0].length];
 		Part[][] eastGrid = new Part[grid.length][grid[0].length];
 		Part[][] southGrid = new Part[grid.length][grid[0].length];
 		Part[][] westGrid = new Part[grid.length][grid[0].length];
-		Part[][] tempGrid = new Part[grid.length][grid[0].length];
 		Part[][] workingGrid = new Part[grid.length][grid[0].length];
-		Stack<Part> part = new Stack<>();
-		Part workingPart = new Part();
 
-		while (!grids.isEmpty()) {
-			numberOfParts = 0;
+		Part[] tempPart = getParts(grid);
+		grids.add(grid);
+
+		for (int i = tempPart.length - 1; i >= 0; i--) {
+			part.add(tempPart[i]);
+		}
+		while (!part.isEmpty()) {
+			workingPart = part.pop();
 			workingGrid = grids.pop();
 
-			for (int i = 0; i < workingGrid.length; i++) {
-				for (int j = 0; j < workingGrid[0].length; j++) {
-					// To add a part in the stack, the part should be not null,
-					// and name is "Part" and size == 1
-					// Or not null, and name is part and size is more than one,
-					// but not already in the Stack
-					if (!((workingGrid[i][j].equals(null))
-							&& workingGrid[i][j].name.equals("part") && workingGrid[i][j].size == 1)
-							|| !(workingGrid[i][j].equals(null))
-							&& workingGrid[i][j].name.equals("part")
-							&& (workingGrid[i][j].size > 1)
-							&& !(part.contains((workingGrid)[i][j]))) {
-						part.push(workingGrid[i][j]);
-						numberOfParts++;
-
-					}
-				}
-			}
-			if (numberOfParts == 1) {
+			if (getParts(workingGrid).length == 1) {
 				answer = true;
 				break;
 			}
-			while (!part.isEmpty()) {
-				workingPart = part.pop();
+			copyNorth = copyPart(workingPart);
+			copyEast = copyPart(workingPart);
+			copySouth = copyPart(workingPart);
+			copyWest = copyPart(workingPart);
 
-				westGrid = doSearch(workingGrid, workingPart, "West");
-				if (westGrid.length > 0)
-					grids.add(westGrid);
-				southGrid = doSearch(workingGrid, workingPart, "South");
-				if (southGrid.length > 0)
-					grids.add(westGrid);
-				eastGrid = doSearch(workingGrid, workingPart, "East");
-				if (eastGrid.length > 0)
-					grids.add(westGrid);
-				northGrid = doSearch(workingGrid, workingPart, "North");
-				if (northGrid.length > 0)
-					grids.add(westGrid);
-
+			westGrid = doSearch(workingGrid, copyWest, "West");
+			if (westGrid.length != 0) {
+				grids.push(westGrid);
+				part.push(copyWest);
 			}
+			southGrid = doSearch(workingGrid, copySouth, "South");
+			if (southGrid.length != 0) {
+				grids.push(southGrid);
+				part.push(copySouth);
+			}
+			eastGrid = doSearch(workingGrid, copyEast, "East");
+			if (eastGrid.length != 0) {
+				grids.push(eastGrid);
+				part.push(copyEast);
+			}
+			northGrid = doSearch(workingGrid, copyNorth, "North");
+			if (northGrid.length != 0) {
+				grids.push(northGrid);
+				part.push(copyNorth);
+			}
+
 		}
 		return answer;
-	}
 
+	}
 	// default;
 
 	public Part getPart(Part[][] grid) {
