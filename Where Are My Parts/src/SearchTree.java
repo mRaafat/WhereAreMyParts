@@ -1171,18 +1171,17 @@ public boolean dfs(Part[][] grid, int numOfParts) {
 		Part[][] southGrid = new Part[grid.length][grid[0].length];
 		Part[][] westGrid = new Part[grid.length][grid[0].length];
 		Part[][] workingGrid = new Part[grid.length][grid[0].length];
-
-		Part[] tempPart = getParts(grid);
 		grids.add(grid);
-
+		Part[] tempPart = getParts(grid);
 		for (int i = tempPart.length - 1; i >= 0; i--) {
 			part.add(tempPart[i]);
 		}
-		while (!part.isEmpty()) {
+		while (!grids.isEmpty() && part.isEmpty()) {
+
 			workingPart = part.pop();
 			workingGrid = grids.pop();
 
-			if (getParts(workingGrid).length == 1) {
+			if (isSolution(workingGrid)) {
 				answer = true;
 				break;
 			}
@@ -1194,22 +1193,34 @@ public boolean dfs(Part[][] grid, int numOfParts) {
 			westGrid = doSearch(workingGrid, copyWest, "West");
 			if (westGrid.length != 0) {
 				grids.push(westGrid);
-				part.push(copyWest);
+				tempPart = getParts(westGrid);
+				for (int i = tempPart.length - 1; i >= 0; i--) {
+					part.add(tempPart[i]);
+				}
 			}
 			southGrid = doSearch(workingGrid, copySouth, "South");
 			if (southGrid.length != 0) {
 				grids.push(southGrid);
-				part.push(copySouth);
+				tempPart = getParts(southGrid);
+				for (int i = tempPart.length - 1; i >= 0; i--) {
+					part.add(tempPart[i]);
+				}
 			}
 			eastGrid = doSearch(workingGrid, copyEast, "East");
 			if (eastGrid.length != 0) {
 				grids.push(eastGrid);
-				part.push(copyEast);
+				tempPart = getParts(eastGrid);
+				for (int i = tempPart.length - 1; i >= 0; i--) {
+					part.add(tempPart[i]);
+				}
 			}
 			northGrid = doSearch(workingGrid, copyNorth, "North");
 			if (northGrid.length != 0) {
 				grids.push(northGrid);
-				part.push(copyNorth);
+				tempPart = getParts(northGrid);
+				for (int i = tempPart.length - 1; i >= 0; i--) {
+					part.add(tempPart[i]);
+				}
 			}
 
 		}
