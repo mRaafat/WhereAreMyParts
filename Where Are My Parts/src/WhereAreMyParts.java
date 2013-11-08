@@ -48,7 +48,6 @@ public class WhereAreMyParts extends SearchTree {
 				numberOfRobotParts--;
 			}
 		}
-		System.out.println(numberOfRobotParts);
 		this.nparts = numberOfRobotParts;
 		// Generating number of Obstacles
 		int numberOfObstacles = (int) (Math.random() * gridSize);
