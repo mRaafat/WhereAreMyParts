@@ -84,7 +84,9 @@ public class WhereAreMyParts extends SearchTree {
 			st.reset();
 			break;
 		case "DF":
-			;
+			st.printGrid(grid);
+			st.dfs(grid, this.nparts);
+			st.reset();
 			break;
 		case "ID":
 			st.printGrid(grid);			
@@ -92,10 +94,14 @@ public class WhereAreMyParts extends SearchTree {
 			st.reset();
 			break;
 		case "GR1":
-			;
+			st.printGrid(grid);
+			st.greedyH1(grid, this.nparts);
+			st.reset();
 			break;
 		case "GR2":
-			;
+			st.printGrid(grid);
+			st.greedyH2(grid, this.nparts);
+			st.reset();
 			break;
 		case "AS1":
 			st.printGrid(grid);
