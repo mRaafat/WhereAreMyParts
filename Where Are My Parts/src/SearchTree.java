@@ -1544,17 +1544,21 @@ public boolean dfs(Part[][] grid, int numOfParts) {
 		testGrid[1][2] = part5;
 		testGrid[1][1] = part6;
 		testGrid[1][3] = part7;
-		// testGrid[3][3] = part8;
-		// k.printGrid(testGrid);
+		
+		k.greedyH1(testGrid, 6);
+		k.greedyH2(testGrid, 6);
+		k.dfs(testGrid, 6);
 		 //k.bfs(testGrid, 6);
 		 //k.ids(testGrid, 6);
 		 //k.aStar1(testGrid, 6);
 		 //k.aStar2(testGrid, 6);
-		// k.printGrid(testGrid);
+		
 		 //k.bfs(grid, 7);
 		 //k.ids(grid, 7);
 		  //k.aStar1(grid, 7);
 		 // k.aStar2(grid, 7);
+		  k.greedyH1(grid, 7);
+		  k.greedyH2(grid, 7);
 		  k.dfs(grid, 7);
 		  
 	}
