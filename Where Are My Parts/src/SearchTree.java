@@ -1214,9 +1214,10 @@ public boolean dfs(Part[][] grid, int numOfParts) {
 		for (int i = tempPart.length - 1; i >= 0; i--) {
 			part.add(tempPart[i]);
 		}
-		while (!grids.isEmpty() && part.isEmpty()) {
+		while (!grids.isEmpty() && !part.isEmpty()) {
 
 			workingPart = part.pop();
+			expandedNodes++;
 			workingGrid = grids.pop();
 
 			if (isSolution(workingGrid)) {
