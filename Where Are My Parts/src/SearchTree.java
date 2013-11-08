@@ -1221,6 +1221,10 @@ public boolean dfs(Part[][] grid, int numOfParts) {
 
 			if (isSolution(workingGrid)) {
 				answer = true;
+				System.out.println("Solution to DFS");
+				System.out.println("Cost: " + getPart(workingGrid).pathCost);
+				System.out.println("Expanded Nodes: " + expandedNodes);
+				printTrace(workingGrid);
 				break;
 			}
 			copyNorth = copyPart(workingPart);
@@ -1302,10 +1306,10 @@ public boolean dfs(Part[][] grid, int numOfParts) {
 	 * Greedy Search
 	 */
 
-	public boolean greedyH1(Part[][] grid) {
+	public boolean greedyH1(Part[][] grid, int numOfParts) {
 		boolean result = false;
 		boolean stoppingCondition = false;
-
+		this.numberOfParts = numOfParts;
 		Part[][] workingGrid = new Part[grid.length][grid[0].length];
 		Queue<Integer> gridCost = new LinkedList<Integer>();
 		Queue<Part[][]> grids = new LinkedList<Part[][]>();
@@ -1322,8 +1326,12 @@ public boolean dfs(Part[][] grid, int numOfParts) {
 			workingGrid = grids.poll();
 			gridCost.poll();
 			Part[] parts = getParts(workingGrid);
-			if (parts.length == 1) {
+			if (isSolution(workingGrid)) {
 				result = true;
+				System.out.println("Solution to greedy 1");
+				System.out.println("Cost: " + getPart(workingGrid).pathCost);
+				System.out.println("Expanded Nodes: " + expandedNodes);
+				printTrace(workingGrid);
 				break;
 			}
 			for (int i = 0; i < parts.length; i++) {
@@ -1427,9 +1435,9 @@ public boolean dfs(Part[][] grid, int numOfParts) {
 		return cost;
 	}
 
-	public boolean greedyH2(Part[][] grid) {
+	public boolean greedyH2(Part[][] grid,int numOfParts) {
 		boolean result = false;
-
+		this.numberOfParts = numOfParts;
 		Part[][] workingGrid = new Part[grid.length][grid[0].length];
 		Queue<Integer> gridCost = new LinkedList<Integer>();
 		Queue<Part[][]> grids = new LinkedList<Part[][]>();
@@ -1445,8 +1453,12 @@ public boolean dfs(Part[][] grid, int numOfParts) {
 			workingGrid = grids.poll();
 			gridCost.poll();
 			Part[] parts = getParts(workingGrid);
-			if (parts.length == 1) {
+			if (isSolution(workingGrid)) {
 				result = true;
+				System.out.println("Solution to greedy 2");
+				System.out.println("Cost: " + getPart(workingGrid).pathCost);
+				System.out.println("Expanded Nodes: " + expandedNodes);
+				printTrace(workingGrid);
 				break;
 			}
 			for (int i = 0; i < parts.length; i++) {
