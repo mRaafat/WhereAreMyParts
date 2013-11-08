@@ -1541,7 +1541,9 @@ public boolean dfs(Part[][] grid, int numOfParts) {
 		// k.printGrid(testGrid);
 		 //k.bfs(grid, 7);
 		 //k.ids(grid, 7);
-		  k.aStar1(grid, 7);
-		  k.aStar2(grid, 7);
+		  //k.aStar1(grid, 7);
+		 // k.aStar2(grid, 7);
+		  k.dfs(grid, 7);
+		  
 	}
 }
