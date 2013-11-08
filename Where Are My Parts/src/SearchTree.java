@@ -1325,6 +1325,7 @@ public boolean dfs(Part[][] grid, int numOfParts) {
 
 			workingGrid = grids.poll();
 			gridCost.poll();
+			expandedNodes++;
 			Part[] parts = getParts(workingGrid);
 			if (isSolution(workingGrid)) {
 				result = true;
@@ -1452,6 +1453,7 @@ public boolean dfs(Part[][] grid, int numOfParts) {
 		while (!grids.isEmpty()) {
 			workingGrid = grids.poll();
 			gridCost.poll();
+			expandedNodes++;
 			Part[] parts = getParts(workingGrid);
 			if (isSolution(workingGrid)) {
 				result = true;
