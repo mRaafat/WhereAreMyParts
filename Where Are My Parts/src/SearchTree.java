@@ -7,6 +7,11 @@ import java.util.Stack;
 public class SearchTree {
 	int numberOfParts;
 	int expandedNodes = 0;
+	
+	public void reset(){
+		this.expandedNodes = 0;
+	}
+	
 	public void printGrid(Part[][] grid) {
 		System.out.println();
 		for (int i = 0; i < grid.length; i++) {
@@ -55,7 +60,6 @@ public class SearchTree {
 		gridsCost.add(0);
 		Part[] gridParts = getParts(grid);
 		for (int i = 0; i < gridParts.length; i++) {
-			gridParts[i].pathCost = 0;
 			gridParts[i].heuristicCost = distinctRows(grid);// number of rows
 		}
 		boolean flag = false;
@@ -142,7 +146,6 @@ public class SearchTree {
 		gridsCost.add(0);
 		Part[] gridParts = getParts(grid);
 		for (int i = 0; i < gridParts.length; i++) {
-			gridParts[i].pathCost = 0;
 			gridParts[i].heuristicCost = numberOfParts;
 		}
 		boolean flag = false;
@@ -168,6 +171,7 @@ public class SearchTree {
 		}
 		if (!flag) {
 			System.out.println("A* failed to find sol.");
+			printTrace(grid);
 		}
 	}
 
@@ -566,8 +570,12 @@ public class SearchTree {
 												if (tempGrid[ii][jj].name == "*") {
 
 												} else {
-													Part f = copyPart(tempGrid[ii][jj]);
-													tempGrid[ii][jj] = f;
+													if(tempGrid[ii][jj] == p){
+														tempGrid[ii][jj] = p;
+													}else{
+														Part f = copyPart(tempGrid[ii][jj]);
+														tempGrid[ii][jj] = f;
+													}
 												}
 											}
 										}
@@ -642,8 +650,12 @@ public class SearchTree {
 													if (tempGrid[ii][jj].name == "*") {
 
 													} else {
-														Part f = copyPart(tempGrid[ii][jj]);
-														tempGrid[ii][jj] = f;
+														if(tempGrid[ii][jj] == resultedPart){
+															tempGrid[ii][jj] = resultedPart;
+														}else{
+															Part f = copyPart(tempGrid[ii][jj]);
+															tempGrid[ii][jj] = f;
+														}
 													}
 												}
 											}
@@ -714,8 +726,12 @@ public class SearchTree {
 												if (tempGrid[ii][jj].name == "*") {
 
 												} else {
-													Part f = copyPart(tempGrid[ii][jj]);
-													tempGrid[ii][jj] = f;
+													if(tempGrid[ii][jj] == p){
+														tempGrid[ii][jj] = p;
+													}else{
+														Part f = copyPart(tempGrid[ii][jj]);
+														tempGrid[ii][jj] = f;
+													}
 												}
 											}
 										}
@@ -771,7 +787,7 @@ public class SearchTree {
 											tempGrid[resultedPart.x[l]][resultedPart.y[l]] = resultedPart;
 										}
 										resultedPart.pathCost = p.pathCost
-												+ p.size * countMoves;
+												+ (p.size * countMoves);
 										//resultedPart.heuristicCost = p.heuristicCost
 											//	- tempGrid[x][y + 1].size;// tempGrid[x][y]
 																			// =
@@ -791,8 +807,12 @@ public class SearchTree {
 													if (tempGrid[ii][jj].name == "*") {
 
 													} else {
-														Part f = copyPart(tempGrid[ii][jj]);
-														tempGrid[ii][jj] = f;
+														if(tempGrid[ii][jj] == resultedPart){
+															tempGrid[ii][jj] = resultedPart;
+														}else{
+															Part f = copyPart(tempGrid[ii][jj]);
+															tempGrid[ii][jj] = f;
+														}
 													}
 												}
 											}
@@ -866,8 +886,12 @@ public class SearchTree {
 												if (tempGrid[ii][jj].name == "*") {
 
 												} else {
-													Part f = copyPart(tempGrid[ii][jj]);
-													tempGrid[ii][jj] = f;
+													if(tempGrid[ii][jj] == p){
+														tempGrid[ii][jj] = p;
+													}else{
+														Part f = copyPart(tempGrid[ii][jj]);
+														tempGrid[ii][jj] = f;
+													}
 												}
 											}
 										}
@@ -924,7 +948,7 @@ public class SearchTree {
 											tempGrid[resultedPart.x[l]][resultedPart.y[l]] = resultedPart;
 										}
 										resultedPart.pathCost = p.pathCost
-												+ p.size * countMoves;
+												+ (p.size * countMoves);
 										//resultedPart.heuristicCost = p.heuristicCost
 											//	- tempGrid[x + 1][y].size;
 										resultedPart.parent = p.parent;
@@ -941,8 +965,12 @@ public class SearchTree {
 													if (tempGrid[ii][jj].name == "*") {
 
 													} else {
-														Part f = copyPart(tempGrid[ii][jj]);
-														tempGrid[ii][jj] = f;
+														if(tempGrid[ii][jj] == resultedPart){
+															tempGrid[ii][jj] = resultedPart;
+														}else{
+															Part f = copyPart(tempGrid[ii][jj]);
+															tempGrid[ii][jj] = f;
+														}
 													}
 												}
 											}
@@ -1011,8 +1039,12 @@ public class SearchTree {
 												if (tempGrid[ii][jj].name == "*") {
 
 												} else {
-													Part f = copyPart(tempGrid[ii][jj]);
-													tempGrid[ii][jj] = f;
+													if(tempGrid[ii][jj] == p){
+														tempGrid[ii][jj] = p;
+													}else{
+														Part f = copyPart(tempGrid[ii][jj]);
+														tempGrid[ii][jj] = f;
+													}
 												}
 											}
 										}
@@ -1069,7 +1101,7 @@ public class SearchTree {
 											tempGrid[resultedPart.x[l]][resultedPart.y[l]] = resultedPart;
 										}
 										resultedPart.pathCost = p.pathCost
-												+ p.size * countMoves;
+												+ (p.size * countMoves);
 										//resultedPart.heuristicCost = p.heuristicCost
 											//	- tempGrid[x][y - 1].size;
 										resultedPart.parent = p.parent;
@@ -1088,8 +1120,12 @@ public class SearchTree {
 													if (tempGrid[ii][jj].name == "*") {
 
 													} else {
-														Part f = copyPart(tempGrid[ii][jj]);
-														tempGrid[ii][jj] = f;
+														if(tempGrid[ii][jj] == resultedPart){
+															tempGrid[ii][jj] = resultedPart;
+														}else{
+															Part f = copyPart(tempGrid[ii][jj]);
+															tempGrid[ii][jj] = f;
+														}
 													}
 												}
 											}
@@ -1219,7 +1255,7 @@ public class SearchTree {
 
 	public Part getPart(Part[][] grid) {
 		for (int i = 0; i < grid.length; i++) {
-			for (int j = 0; j < grid.length; j++) {
+			for (int j = 0; j < grid[i].length; j++) {
 				if (grid[i][j] == null) {
 
 				} else {
@@ -1440,15 +1476,25 @@ public class SearchTree {
 	
 	public static void main(String[] args) {
 		
-		Part[][] grid = new Part[4][4];
-		  Part part11 = new Part("part", 1, new int[] { 0 }, new int[] { 0 });
-		  Part part22 = new Part("part", 1, new int[] { 0 }, new int[] { 1 });
-		  Part part33 = new Part("part", 1, new int[] { 2 }, new int[] { 1 });
-		  Part part44 = new Part("part", 1, new int[] { 2 }, new int[] { 3 });
-		  grid[0][0] = part11;
-		  grid[0][1] = part22;
-		  grid[2][1] = part33;
-		  grid[2][3] = part44;
+		Part[][] grid = new Part[3][5];
+		  Part part11 = new Part("part", 1, new int[] { 0 }, new int[] { 1 });
+		  Part part22 = new Part("part", 1, new int[] { 0 }, new int[] { 2 });
+		  Part part33 = new Part("part", 1, new int[] { 1 }, new int[] { 0 });
+		  Part part44 = new Part("part", 1, new int[] { 1 }, new int[] { 3 });
+		  Part part55 = new Part("*", 0, new int[] { 0 }, new int[] { 0 });
+		  Part part66 = new Part("*", 0, new int[] { 0 }, new int[] { 3 });
+		  Part part77 = new Part("part", 1, new int[] { 1 }, new int[] { 4 });
+		  Part part88 = new Part("part", 1, new int[] { 2 }, new int[] { 0 });
+		  Part part99 = new Part("part", 1, new int[] { 2 }, new int[] { 2 });
+		  grid[0][1] = part11;
+		  grid[0][2] = part22;
+		  grid[1][0] = part33;
+		  grid[1][3] = part44;
+		  grid[0][0] = part55;
+		  grid[0][3] = part66;
+		  grid[1][4] = part77;
+		  grid[2][0] = part88;
+		  grid[2][2] = part99;
 		  
 		
 		
@@ -1459,7 +1505,7 @@ public class SearchTree {
 		Part part5 = new Part("part", 1, new int[] { 1 }, new int[] { 2 });
 		Part part6 = new Part("*", 0, new int[] { 1 }, new int[] { 1 });
 		Part part7 = new Part("part", 1, new int[] { 1 }, new int[] { 3 });
-		Part part8 = new Part("*", 0, new int[] { 3 }, new int[] { 3 });
+		Part part8 = new Part("*", 0, new int[] { 2 }, new int[] { 2 });
 		SearchTree k = new SearchTree();
 		// Part returnedPart = k.raafatSearch(part1, grid, "East");
 		// System.out.println(returnedPart.name);
@@ -1469,7 +1515,7 @@ public class SearchTree {
 		testGrid[2][0] = part3;
 		testGrid[2][2] = part4;
 		testGrid[1][2] = part5;
-		// testGrid[1][1] = part6;
+		testGrid[1][1] = part6;
 		testGrid[1][3] = part7;
 		// testGrid[3][3] = part8;
 		// k.printGrid(testGrid);
@@ -1478,10 +1524,9 @@ public class SearchTree {
 		 //k.aStar1(testGrid, 6);
 		 //k.aStar2(testGrid, 6);
 		// k.printGrid(testGrid);
-		 //k.bfs(grid, 4);
-		 //k.ids(grid, 4);
-		 //k.aStar1(grid, 4);
-		 k.aStar2(grid, 4);
+		 //k.bfs(grid, 7);
+		 //k.ids(grid, 7);
+		  k.aStar1(grid, 7);
+		 k.aStar2(grid, 7);
 	}
-
 }

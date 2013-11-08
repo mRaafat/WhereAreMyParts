@@ -14,7 +14,7 @@ public class Part {
 		this.size = size;
 		this.x = x;
 		this.y = y;
-		this.pathCost = 1;
+		this.pathCost = 0;
 		this.heuristicCost = 0;
 		this.parent = null;
 		int hitPartX = 0;
